@@ -543,7 +543,7 @@ function SourceBadge({
 function HealthRing({
   health,
 }) {
-  const radius = 44;
+  const radius = 52;
 
   const circumference =
     2 * Math.PI * radius;
@@ -573,15 +573,15 @@ function HealthRing({
 
       <svg
         className="health-ring"
-        width="120"
-        height="120"
-        viewBox="0 0 120 120"
+        width="134"
+        height="134"
+        viewBox="0 0 134 134"
       >
 
         <circle
           className="health-ring-bg"
-          cx="60"
-          cy="60"
+          cx="67"
+          cy="67"
           r={radius}
         />
 
@@ -590,8 +590,8 @@ function HealthRing({
             health-ring-progress
             health-${state.toLowerCase()}
           `}
-          cx="60"
-          cy="60"
+          cx="67"
+          cy="67"
           r={radius}
           strokeDasharray={
             circumference
@@ -1263,7 +1263,10 @@ export default function App() {
 
     connectWebSocket();
 
+    let isFetching = false;
     const fetchHttpTelemetry = async () => {
+      if (isFetching) return;
+      isFetching = true;
       try {
         const response = await fetch("http://127.0.0.1:5000/api/dashboard");
         if (response.ok) {
@@ -1272,11 +1275,13 @@ export default function App() {
         }
       } catch (err) {
         // Backend offline or unreachable
+      } finally {
+        isFetching = false;
       }
     };
 
     fetchHttpTelemetry();
-    const pollInterval = setInterval(fetchHttpTelemetry, 150);
+    const pollInterval = setInterval(fetchHttpTelemetry, 100);
 
     // Connection watchdog: only mark offline if no data received for 3 seconds
     const watchdogInterval = setInterval(() => {
@@ -2759,13 +2764,13 @@ export default function App() {
 
                         {index === 0 && (
                           <span style={{
-                            fontSize: '9px',
-                            fontWeight: '800',
-                            padding: '2px 6px',
-                            borderRadius: '4px',
-                            background: 'rgba(255, 170, 0, 0.25)',
-                            border: '1px solid #ffaa00',
-                            color: '#ffb84d',
+                            fontSize: '7px',
+                            fontWeight: '600',
+                            padding: '1px 5px',
+                            borderRadius: '3px',
+                            background: 'rgba(255, 170, 0, 0.12)',
+                            border: '1px solid rgba(255, 170, 0, 0.3)',
+                            color: '#d9a04e',
                             textTransform: 'uppercase',
                             width: 'auto',
                             height: 'auto',
@@ -2923,27 +2928,21 @@ export default function App() {
               <div className="attitude-circle">
 
                 <div
-                  className="attitude-aircraft"
+                  className="attitude-horizon"
                   style={{
-                    transform:
-                      `
-                        translate(
-                          -50%,
-                          -50%
-                        )
-                        rotate(
-                          ${reading.roll_deg}deg
-                        )
-                      `,
+                    transform: `rotate(${-number(reading.roll_deg)}deg) translateY(${number(reading.pitch_deg) * 1.8}px)`,
                   }}
                 >
+                  <div className="attitude-sky" />
+                  <div className="attitude-horizon-line" />
+                  <div className="attitude-ground" />
+                </div>
 
+                <div className="attitude-aircraft">
                   <span />
                   <b />
                   <i />
-
                 </div>
-
 
                 <div className="attitude-crosshair">
                   +

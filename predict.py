@@ -223,10 +223,19 @@ def engineering_check(data):
 # PREDICT ENGINE
 # ============================================================
 
+_PREDICT_CACHE = None
+_LAST_PREDICT_TIME = 0.0
+
 def predict_engine(
     ai_input,
     engineering_faults=None
 ):
+    global _PREDICT_CACHE, _LAST_PREDICT_TIME
+    import time
+    now = time.time()
+
+    if (now - _LAST_PREDICT_TIME < 0.10) and _PREDICT_CACHE is not None and not engineering_faults:
+        return _PREDICT_CACHE
 
     # --------------------------------------------------------
     # Create dataframe
@@ -522,3 +531,7 @@ def predict_engine(
         "engineering_faults":
             engineering_faults
     }
+
+    _PREDICT_CACHE = result
+    _LAST_PREDICT_TIME = now
+    return result

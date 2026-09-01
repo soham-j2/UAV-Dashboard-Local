@@ -114,17 +114,53 @@ class AIDigitalTwin:
                     0
                 ),
 
-            "load":
-                load,
+            "cht_c":
+                sensor_data.get(
+                    "cht_c",
+                    0
+                ),
 
-            "ambient_temp":
-                ambient_temp,
+            "egt_c":
+                sensor_data.get(
+                    "egt_c",
+                    0
+                ),
 
-            "altitude":
-                altitude,
+            "oil_press_bar":
+                sensor_data.get(
+                    "oil_press_bar",
+                    0
+                ),
 
-            "throttle":
-                throttle,
+            "oil_temp_c":
+                sensor_data.get(
+                    "oil_temp_c",
+                    0
+                ),
+
+            "fuel_flow_lph":
+                sensor_data.get(
+                    "fuel_flow_lph",
+                    0
+                ),
+
+            "vibration_g":
+                sensor_data.get(
+                    "vibration_g",
+                    0
+                ),
+
+            "battery_v":
+                sensor_data.get(
+                    "battery_v",
+                    0
+                ),
+
+            "injection_deg":
+                sensor_data.get(
+                    "injection_deg",
+                    0
+                ),
 
             "cht_residual":
                 residuals.get(
@@ -147,18 +183,6 @@ class AIDigitalTwin:
             "vibration_residual":
                 residuals.get(
                     "vibration_residual",
-                    0
-                ),
-
-            "fuel_flow":
-                sensor_data.get(
-                    "fuel_flow_lph",
-                    0
-                ),
-
-            "current":
-                sensor_data.get(
-                    "battery_v",
                     0
                 )
         }
