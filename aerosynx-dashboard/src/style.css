@@ -1,0 +1,1528 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap");
+
+/* =========================================================
+   AEROSYNX — GLOBAL THEME
+========================================================= */
+
+:root {
+  --bg: #060a10;
+  --panel: #0b111a;
+  --panel-2: #0e151f;
+  --line: #1c2733;
+
+  --text: #dce7ee;
+  --muted: #71808e;
+
+  --cyan: #00c8ff;
+  --green: #00e5aa;
+  --amber: #ffb020;
+  --red: #ff4d6d;
+  --purple: #8d7aff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  width: 100%;
+  background: var(--bg);
+}
+
+body {
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+/* Aerospace grid background */
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.28;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 200, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 200, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 36px 36px;
+}
+
+/* =========================================================
+   APPLICATION
+========================================================= */
+
+.app-shell {
+  min-height: 100vh;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(0, 180, 220, 0.07),
+      transparent 32%
+    ),
+    var(--bg);
+}
+
+/* =========================================================
+   TOP NAVIGATION
+========================================================= */
+
+.topbar {
+  height: 70px;
+
+  border-bottom: 1px solid var(--line);
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 22px;
+
+  background: rgba(5, 9, 15, 0.94);
+
+  backdrop-filter: blur(18px);
+
+  gap: 30px;
+}
+
+/* Brand */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  min-width: 245px;
+}
+
+.brand-mark {
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid #168ba5;
+
+  color: var(--cyan);
+
+  display: grid;
+  place-items: center;
+
+  font: 700 13px "JetBrains Mono";
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(0, 200, 255, 0.12),
+      transparent
+    );
+
+  box-shadow:
+    0 0 20px rgba(0, 200, 255, 0.08);
+}
+
+.brand strong {
+  display: block;
+
+  font-size: 15px;
+
+  letter-spacing: 0.16em;
+}
+
+.brand span {
+  display: block;
+
+  font: 500 8px "JetBrains Mono";
+
+  color: #5e7380;
+
+  letter-spacing: 0.1em;
+
+  margin-top: 2px;
+}
+
+/* Mission */
+
+.mission {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  font: 500 11px "JetBrains Mono";
+
+  border-left: 1px solid var(--line);
+
+  padding-left: 25px;
+}
+
+.mission span {
+  color: #657582;
+
+  font-size: 8px;
+}
+
+.mission b {
+  color: var(--green);
+}
+
+.mission em {
+  font-style: normal;
+  color: #536572;
+}
+
+/* Top status */
+
+.top-status {
+  margin-left: auto;
+
+  display: flex;
+
+  gap: 8px;
+}
+
+.status-pill {
+  border: 1px solid var(--line);
+
+  background: #0a1018;
+
+  padding: 8px 10px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  color: #82929e;
+
+  font: 500 9px "JetBrains Mono";
+
+  letter-spacing: 0.04em;
+}
+
+.status-pill b {
+  color: var(--green);
+}
+
+.status-pill.online {
+  color: var(--green);
+}
+
+.status-pill.offline {
+  color: var(--red);
+}
+
+/* =========================================================
+   SECONDARY BAR
+========================================================= */
+
+.subbar {
+  height: 42px;
+
+  border-bottom: 1px solid var(--line);
+
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 22px;
+
+  background: #080d14;
+}
+
+.crumb {
+  font: 600 10px "JetBrains Mono";
+
+  letter-spacing: 0.1em;
+
+  color: #a6b5bf;
+}
+
+.live-dot {
+  display: inline-block;
+
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: var(--green);
+
+  box-shadow:
+    0 0 10px var(--green);
+
+  margin-right: 8px;
+}
+
+.sub-actions {
+  display: flex;
+
+  gap: 20px;
+
+  color: #52636f;
+
+  font: 500 9px "JetBrains Mono";
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+  padding: 14px 18px 28px;
+
+  max-width: 1800px;
+
+  margin: auto;
+}
+
+/* =========================================================
+   PANELS
+========================================================= */
+
+.panel {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(14, 21, 31, 0.96),
+      rgba(8, 13, 20, 0.96)
+    );
+
+  border: 1px solid var(--line);
+
+  border-radius: 6px;
+
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.2);
+
+  overflow: hidden;
+}
+
+.panel-title {
+  height: 42px;
+
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-bottom: 1px solid #18232e;
+
+  color: #a7b5bf;
+
+  font: 600 10px "JetBrains Mono";
+
+  letter-spacing: 0.06em;
+}
+
+.panel-title span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+}
+
+.panel-title span svg {
+  color: var(--cyan);
+}
+
+.panel-title small {
+  font: 500 8px "JetBrains Mono";
+
+  color: #50606c;
+}
+
+/* =========================================================
+   HERO GRID
+========================================================= */
+
+.hero-grid {
+  display: grid;
+
+  grid-template-columns:
+    310px
+    minmax(450px, 1fr)
+    330px;
+
+  gap: 12px;
+}
+
+/* =========================================================
+   LIVE MEASUREMENTS
+========================================================= */
+
+.telemetry-panel {
+  min-height: 475px;
+}
+
+.metric-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 7px;
+
+  padding: 10px;
+}
+
+.metric {
+  border: 1px solid #17222d;
+
+  background: #0b1119;
+
+  padding: 9px;
+
+  min-height: 70px;
+
+  position: relative;
+
+  transition: 0.2s ease;
+}
+
+.metric:hover {
+  border-color: #27404e;
+
+  transform: translateY(-1px);
+}
+
+.metric::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  height: 1px;
+
+  width: 38px;
+
+  background: var(--green);
+}
+
+.metric-head {
+  display: flex;
+
+  justify-content: space-between;
+
+  color: #61717d;
+
+  font: 500 8px "JetBrains Mono";
+
+  text-transform: uppercase;
+}
+
+.metric-head span {
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.metric-head svg {
+  color: #5d7885;
+}
+
+.metric-head i {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+
+  background: var(--green);
+
+  box-shadow:
+    0 0 7px rgba(0, 229, 170, 0.6);
+}
+
+.metric-danger .metric-head i {
+  background: var(--red);
+
+  box-shadow:
+    0 0 8px rgba(255, 77, 109, 0.8);
+}
+
+.metric-danger::after {
+  background: var(--red);
+}
+
+.metric-warn .metric-head i {
+  background: var(--amber);
+}
+
+.metric-value {
+  font: 600 21px "JetBrains Mono";
+
+  margin-top: 9px;
+
+  color: #d9f5ee;
+}
+
+.metric-value small {
+  font-size: 9px;
+
+  color: #60737f;
+
+  margin-left: 4px;
+}
+
+.range-note {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 8px 11px 11px;
+
+  color: #566874;
+
+  font: 500 8px "JetBrains Mono";
+}
+
+.legend-dot {
+  width: 5px;
+  height: 5px;
+
+  display: inline-block;
+
+  border-radius: 50%;
+
+  margin-right: 4px;
+
+  background: var(--green);
+}
+
+.legend-dot.danger {
+  background: var(--red);
+}
+
+/* =========================================================
+   DIGITAL TWIN
+========================================================= */
+
+.twin-panel {
+  min-height: 475px;
+}
+
+.twin-stage {
+  height: 430px;
+
+  position: relative;
+
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(0, 213, 180, 0.055),
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      #0b111a,
+      #080d14
+    );
+}
+
+.stage-corner {
+  position: absolute;
+
+  z-index: 3;
+
+  font: 600 9px "JetBrains Mono";
+
+  letter-spacing: 0.04em;
+
+  color: #6e8490;
+
+  background: rgba(5, 9, 14, 0.5);
+
+  padding: 5px 7px;
+}
+
+.stage-corner span {
+  color: var(--green);
+
+  margin-left: 5px;
+}
+
+.top-left {
+  top: 9px;
+  left: 10px;
+}
+
+.bottom-left {
+  bottom: 8px;
+  left: 10px;
+}
+
+.bottom-right {
+  bottom: 8px;
+  right: 10px;
+
+  color: #50636f;
+}
+
+/* Twin badges */
+
+.twin-badges {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+.badge {
+  padding: 4px 7px;
+
+  border-radius: 3px;
+
+  font: 600 7px "JetBrains Mono";
+
+  letter-spacing: 0.05em;
+}
+
+.badge.cyan {
+  color: var(--cyan);
+
+  border: 1px solid rgba(0, 200, 255, 0.25);
+
+  background: rgba(0, 200, 255, 0.05);
+}
+
+.badge.green {
+  color: var(--green);
+
+  border: 1px solid rgba(0, 229, 170, 0.25);
+
+  background: rgba(0, 229, 170, 0.05);
+}
+
+.badge.red {
+  color: var(--red);
+
+  border: 1px solid rgba(255, 77, 109, 0.3);
+
+  background: rgba(255, 77, 109, 0.06);
+}
+
+/* Physics strip */
+
+.physics-strip {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  border-top: 1px solid var(--line);
+}
+
+.physics-strip div {
+  padding: 9px 12px;
+
+  border-right: 1px solid var(--line);
+}
+
+.physics-strip div:last-child {
+  border-right: 0;
+}
+
+.physics-strip small {
+  display: block;
+
+  color: #566873;
+
+  font: 500 7px "JetBrains Mono";
+
+  margin-bottom: 4px;
+}
+
+.physics-strip b {
+  font: 600 13px "JetBrains Mono";
+
+  color: #d6e7e8;
+}
+
+.physics-strip i {
+  font-size: 8px;
+
+  color: #607681;
+
+  font-style: normal;
+
+  margin-left: 3px;
+}
+
+/* =========================================================
+   AI DIAGNOSTICS
+========================================================= */
+
+.ai-panel {
+  min-height: 475px;
+}
+
+.ai-panel.panel-alert {
+  border-color: rgba(255, 77, 109, 0.45);
+
+  box-shadow:
+    0 0 35px rgba(255, 77, 109, 0.05);
+}
+
+.ai-banner {
+  margin: 12px;
+
+  border: 1px solid #1b2b36;
+
+  padding: 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.ai-banner.nominal {
+  background: rgba(0, 229, 170, 0.035);
+}
+
+.ai-banner.alert {
+  background: rgba(255, 77, 109, 0.055);
+
+  border-color: rgba(255, 77, 109, 0.3);
+}
+
+.ai-orb {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  display: grid;
+  place-items: center;
+
+  color: var(--green);
+
+  background: rgba(0, 229, 170, 0.08);
+
+  box-shadow:
+    0 0 20px rgba(0, 229, 170, 0.1);
+}
+
+.ai-banner.alert .ai-orb {
+  color: var(--red);
+
+  background: rgba(255, 77, 109, 0.08);
+}
+
+.ai-banner small {
+  display: block;
+
+  font: 500 7px "JetBrains Mono";
+
+  color: #5d707d;
+}
+
+.ai-banner strong {
+  display: block;
+
+  font: 600 13px "JetBrains Mono";
+
+  color: var(--green);
+
+  margin-top: 3px;
+}
+
+.ai-banner.alert strong {
+  color: var(--red);
+}
+
+/* AI KPI grid */
+
+.ai-kpis {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  border-top: 1px solid var(--line);
+
+  border-bottom: 1px solid var(--line);
+}
+
+.ai-kpis div {
+  padding: 10px 12px;
+
+  border-right: 1px solid var(--line);
+
+  border-bottom: 1px solid var(--line);
+}
+
+.ai-kpis div:nth-child(2n) {
+  border-right: 0;
+}
+
+.ai-kpis div:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.ai-kpis span {
+  display: block;
+
+  color: #596b77;
+
+  font: 500 7px "JetBrains Mono";
+
+  text-transform: uppercase;
+}
+
+.ai-kpis b {
+  display: block;
+
+  color: #d9e6eb;
+
+  font: 600 12px "JetBrains Mono";
+
+  margin-top: 5px;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+}
+
+/* Operational decision */
+
+.decision {
+  margin: 12px;
+
+  border-left: 2px solid;
+
+  padding: 9px 11px;
+
+  background: #0a1118;
+}
+
+.decision span {
+  display: block;
+
+  color: #596c77;
+
+  font: 500 7px "JetBrains Mono";
+}
+
+.decision strong {
+  display: block;
+
+  margin-top: 3px;
+
+  font: 700 13px "JetBrains Mono";
+}
+
+.decision.safe {
+  border-color: var(--green);
+}
+
+.decision.safe strong {
+  color: var(--green);
+}
+
+.decision.caution {
+  border-color: var(--amber);
+}
+
+.decision.caution strong {
+  color: var(--amber);
+}
+
+.decision.danger {
+  border-color: var(--red);
+}
+
+.decision.danger strong {
+  color: var(--red);
+}
+
+/* Recommendation */
+
+.recommendation {
+  margin: 12px;
+
+  padding: 10px;
+
+  border: 1px solid #17232d;
+
+  background: #0a1017;
+}
+
+.recommendation small {
+  display: block;
+
+  font: 500 7px "JetBrains Mono";
+
+  color: #5d707d;
+}
+
+.recommendation p {
+  margin: 5px 0 0;
+
+  color: #95a7b1;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+/* =========================================================
+   LOWER GRID
+========================================================= */
+
+.lower-grid {
+  display: grid;
+
+  grid-template-columns:
+    1.2fr
+    1fr
+    0.75fr;
+
+  gap: 12px;
+
+  margin-top: 12px;
+}
+
+.chart-panel,
+.residual-panel,
+.health-panel {
+  min-height: 200px;
+}
+
+/* =========================================================
+   RPM CHART
+========================================================= */
+
+.chart-value {
+  padding: 12px 14px 0;
+}
+
+.chart-value strong {
+  font: 600 24px "JetBrains Mono";
+
+  color: #dff7f1;
+}
+
+.chart-value span {
+  font: 8px "JetBrains Mono";
+
+  color: #60727e;
+
+  margin-left: 5px;
+}
+
+.spark {
+  width: 100%;
+
+  height: 75px;
+
+  display: block;
+
+  margin-top: 5px;
+}
+
+.spark-empty {
+  width: 100%;
+
+  height: 75px;
+}
+
+.chart-footer {
+  display: flex;
+
+  justify-content: space-between;
+
+  padding: 0 13px 11px;
+
+  color: #52646f;
+
+  font: 500 7px "JetBrains Mono";
+}
+
+/* =========================================================
+   DIGITAL TWIN RESIDUALS
+========================================================= */
+
+.residual-list {
+  padding: 12px;
+}
+
+.residual-row {
+  display: grid;
+
+  grid-template-columns:
+    80px
+    1fr
+    100px;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 11px 0;
+}
+
+.residual-row > span {
+  font: 500 8px "JetBrains Mono";
+
+  color: #70818c;
+}
+
+.residual-row > b {
+  text-align: right;
+
+  font: 500 9px "JetBrains Mono";
+
+  color: #b7c6ce;
+}
+
+.res-bar {
+  height: 4px;
+
+  background: #131d26;
+
+  border-radius: 5px;
+
+  overflow: hidden;
+}
+
+.res-bar i {
+  display: block;
+
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--cyan),
+      var(--green)
+    );
+
+  border-radius: 5px;
+
+  transition: width 0.3s ease;
+}
+
+/* =========================================================
+   ENGINE HEALTH
+========================================================= */
+
+.health-ring-wrap {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 20px 16px;
+}
+
+.health-ring {
+  width: 112px;
+  height: 112px;
+
+  border-radius: 50%;
+
+  display: grid;
+
+  place-items: center;
+
+  background:
+    conic-gradient(
+      var(--green) var(--score),
+      #16212b 0
+    );
+
+  position: relative;
+}
+
+.health-ring::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 8px;
+
+  border-radius: 50%;
+
+  background: #0b1119;
+}
+
+.health-ring > div {
+  position: relative;
+
+  z-index: 2;
+
+  text-align: center;
+}
+
+.health-ring strong {
+  display: block;
+
+  font: 600 28px "JetBrains Mono";
+}
+
+.health-ring span {
+  font: 8px "JetBrains Mono";
+
+  color: #62737d;
+}
+
+.health-ring.warn {
+  background:
+    conic-gradient(
+      var(--amber) var(--score),
+      #16212b 0
+    );
+}
+
+.health-ring.danger {
+  background:
+    conic-gradient(
+      var(--red) var(--score),
+      #16212b 0
+    );
+}
+
+.health-label {
+  font: 700 11px "JetBrains Mono";
+
+  letter-spacing: 0.08em;
+}
+
+.health-label.good {
+  color: var(--green);
+}
+
+.health-label.warn {
+  color: var(--amber);
+}
+
+.health-label.danger {
+  color: var(--red);
+}
+
+.health-ring-wrap p {
+  color: #61727e;
+
+  font-size: 9px;
+
+  line-height: 1.5;
+
+  max-width: 130px;
+}
+
+/* =========================================================
+   FAULT INJECTION
+========================================================= */
+
+.fault-panel {
+  margin-top: 12px;
+}
+
+.fault-head {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.test-warning {
+  margin-right: 13px;
+
+  color: #b18436;
+
+  font: 500 8px "JetBrains Mono";
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+}
+
+.fault-controls {
+  display: grid;
+
+  grid-template-columns:
+    1fr
+    1fr
+    auto
+    1fr;
+
+  gap: 10px;
+
+  padding: 13px;
+}
+
+.control-block label {
+  display: block;
+
+  color: #5c6f7b;
+
+  font: 500 7px "JetBrains Mono";
+
+  margin: 0 0 5px;
+
+  text-transform: uppercase;
+}
+
+/* Select */
+
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap select {
+  width: 100%;
+
+  appearance: none;
+
+  background: #0a1118;
+
+  color: #c8d6dc;
+
+  border: 1px solid #1b2934;
+
+  padding: 10px 32px 10px 10px;
+
+  border-radius: 4px;
+
+  outline: 0;
+
+  font: 500 9px "JetBrains Mono";
+
+  cursor: pointer;
+}
+
+.select-wrap select:hover {
+  border-color: #2a4656;
+}
+
+.select-wrap svg {
+  position: absolute;
+
+  right: 9px;
+
+  top: 10px;
+
+  color: #5f7380;
+
+  pointer-events: none;
+}
+
+/* Clear button */
+
+.clear-btn {
+  align-self: end;
+
+  height: 36px;
+
+  background: #120d12;
+
+  border: 1px solid #42222c;
+
+  color: #ff7188;
+
+  border-radius: 4px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0 14px;
+
+  font: 600 8px "JetBrains Mono";
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.clear-btn:hover {
+  background: #1a0e14;
+
+  border-color: var(--red);
+}
+
+/* Active fault */
+
+.active-fault {
+  align-self: end;
+
+  height: 36px;
+
+  border: 1px solid #1b2934;
+
+  background: #0a1118;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 10px;
+}
+
+.active-fault span {
+  font: 500 7px "JetBrains Mono";
+
+  color: #536570;
+}
+
+.active-fault b {
+  font: 600 9px "JetBrains Mono";
+
+  color: var(--green);
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+  position: fixed;
+
+  right: 18px;
+
+  bottom: 18px;
+
+  background: #0e1a20;
+
+  border: 1px solid #245b60;
+
+  color: #bfeee4;
+
+  padding: 10px 13px;
+
+  border-radius: 4px;
+
+  font: 600 9px "JetBrains Mono";
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  box-shadow:
+    0 15px 40px #0008;
+
+  z-index: 20;
+
+  animation: toastIn 0.25s ease;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #070b11;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1c303c;
+
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #294655;
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+  .hero-grid {
+    grid-template-columns:
+      260px
+      1fr;
+  }
+
+  .ai-panel {
+    grid-column: 1 / -1;
+  }
+
+  .lower-grid {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
+
+  .health-panel {
+    grid-column: 1 / -1;
+  }
+
+  .fault-controls {
+    grid-template-columns:
+      1fr
+      1fr;
+  }
+
+  .top-status .status-pill:nth-child(1) {
+    display: none;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+========================================================= */
+
+@media (max-width: 800px) {
+  .topbar {
+    gap: 10px;
+
+    padding: 0 12px;
+  }
+
+  .mission,
+  .sub-actions {
+    display: none;
+  }
+
+  .top-status {
+    gap: 4px;
+  }
+
+  .top-status .status-pill {
+    padding: 7px;
+  }
+
+  .hero-grid,
+  .lower-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ai-panel,
+  .health-panel {
+    grid-column: auto;
+  }
+
+  .twin-stage {
+    height: 360px;
+  }
+
+  .fault-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .test-warning {
+    display: none;
+  }
+
+  main {
+    padding: 10px;
+  }
+
+  .brand {
+    min-width: auto;
+  }
+
+  .brand span {
+    display: none;
+  }
+}
+
+/* =========================================================
+   VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 480px) {
+  .brand strong {
+    font-size: 12px;
+  }
+
+  .brand-mark {
+    width: 32px;
+    height: 32px;
+  }
+
+  .topbar {
+    height: 60px;
+  }
+
+  .subbar {
+    height: 36px;
+  }
+
+  .metric-value {
+    font-size: 17px;
+  }
+
+  .physics-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .health-ring-wrap {
+    justify-content: center;
+  }
+}
+.spark-container {
+  width: 100%;
+  height: 75px;
+  padding: 0 12px;
+}
+
+.spark {
+  width: 100%;
+  height: 75px;
+  display: block;
+}
+
+.spark-empty {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #50636f;
+
+  font: 500 8px "JetBrains Mono";
+  letter-spacing: 0.08em;
+}
