@@ -972,6 +972,10 @@ export default function App() {
   const alarmTimerRef =
     useRef(null);
 
+  const lastReceiveTimeRef =
+    useRef(null);
+
+
 
   const reading =
     packet.reading ||
@@ -1123,6 +1127,33 @@ export default function App() {
 
 
   /* ==========================================================
+     UNIFIED TELEMETRY HANDLER
+     ========================================================== */
+
+  const handleIncomingData = useCallback((raw) => {
+    try {
+      const normalized = normalizePacket(raw);
+      lastReceiveTimeRef.current = Date.now();
+      setPacket(normalized);
+      setConnected(true);
+      setLastUpdate(new Date());
+
+      const r = normalized.reading;
+      if (r) {
+        setRpmHistory((prev) =>
+          [...prev, number(r.rpm)].slice(-50)
+        );
+        setEgtHistory((prev) =>
+          [...prev, number(r.egt_c)].slice(-50)
+        );
+      }
+    } catch (error) {
+      console.warn("[AeroSynX] Invalid telemetry packet:", error);
+    }
+  }, []);
+
+
+  /* ==========================================================
      WEBSOCKET CONNECTION
      ========================================================== */
 
@@ -1154,10 +1185,6 @@ export default function App() {
 
       } catch {
 
-        setConnected(
-          false
-        );
-
         reconnectRef.current =
           setTimeout(
             connectWebSocket,
@@ -1175,19 +1202,11 @@ export default function App() {
       ws.onopen = () => {
 
         console.log(
-          "[AeroSynX] Telemetry connected"
+          "[AeroSynX] Telemetry WebSocket connected"
         );
 
         setConnected(
           true
-        );
-
-        toast.success(
-          "Telemetry connection established",
-          {
-            toastId:
-              "telemetry-connected",
-          }
         );
 
       };
@@ -1204,48 +1223,12 @@ export default function App() {
               event.data
             );
 
-
-          const normalized =
-            normalizePacket(
-              raw
-            );
-
-
-          setPacket(
-            normalized
-          );
-
-
-          setLastUpdate(
-            new Date()
-          );
-
-
-          const r =
-            normalized.reading;
-
-
-          setRpmHistory(
-            (prev) =>
-              [
-                ...prev,
-                number(r.rpm),
-              ].slice(-50)
-          );
-
-
-          setEgtHistory(
-            (prev) =>
-              [
-                ...prev,
-                number(r.egt_c),
-              ].slice(-50)
-          );
+          handleIncomingData(raw);
 
         } catch (error) {
 
           console.warn(
-            "[AeroSynX] Invalid telemetry:",
+            "[AeroSynX] Invalid telemetry message:",
             error
           );
 
@@ -1260,18 +1243,10 @@ export default function App() {
           "[AeroSynX] Telemetry socket error"
         );
 
-        setConnected(
-          false
-        );
-
       };
 
 
       ws.onclose = () => {
-
-        setConnected(
-          false
-        );
 
         reconnectRef.current =
           setTimeout(
@@ -1281,7 +1256,7 @@ export default function App() {
 
       };
 
-    }, []);
+    }, [handleIncomingData]);
 
 
   useEffect(() => {
@@ -1293,20 +1268,7 @@ export default function App() {
         const response = await fetch("http://127.0.0.1:5000/api/dashboard");
         if (response.ok) {
           const raw = await response.json();
-          const normalized = normalizePacket(raw);
-          setPacket(normalized);
-          setConnected(true);
-          setLastUpdate(new Date());
-
-          const r = normalized.reading;
-          if (r) {
-            setRpmHistory((prev) =>
-              [...prev, number(r.rpm)].slice(-50)
-            );
-            setEgtHistory((prev) =>
-              [...prev, number(r.egt_c)].slice(-50)
-            );
-          }
+          handleIncomingData(raw);
         }
       } catch (err) {
         // Backend offline or unreachable
@@ -1316,9 +1278,20 @@ export default function App() {
     fetchHttpTelemetry();
     const pollInterval = setInterval(fetchHttpTelemetry, 150);
 
+    // Connection watchdog: only mark offline if no data received for 3 seconds
+    const watchdogInterval = setInterval(() => {
+      if (
+        lastReceiveTimeRef.current &&
+        Date.now() - lastReceiveTimeRef.current > 3000
+      ) {
+        setConnected(false);
+      }
+    }, 500);
+
 
     return () => {
       clearInterval(pollInterval);
+      clearInterval(watchdogInterval);
 
       if (
         reconnectRef.current
@@ -1354,6 +1327,7 @@ export default function App() {
 
   }, [
     connectWebSocket,
+    handleIncomingData,
   ]);
 
 
@@ -2640,37 +2614,7 @@ export default function App() {
           </div>
 
 
-          {/* FAULT INJECTION */}
 
-          <FaultInjection
-            selectedFault={
-              selectedFault
-            }
-
-            setSelectedFault={
-              setSelectedFault
-            }
-
-            selectedProfile={
-              selectedProfile
-            }
-
-            setSelectedProfile={
-              setSelectedProfile
-            }
-
-            onInject={
-              injectFault
-            }
-
-            onClear={
-              clearFault
-            }
-
-            injecting={
-              injecting
-            }
-          />
 
         </section>
 

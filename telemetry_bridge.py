@@ -138,19 +138,8 @@ def get_api_telemetry():
         if _LATEST_API_DATA is not None:
             return dict(_LATEST_API_DATA)
 
-    try:
-        response = requests.get(
-            API_URL,
-            timeout=1.5
-        )
-        if response.status_code == 200:
-            data = response.json()
-            if isinstance(data, dict):
-                return data
-    except Exception:
-        pass
-
     return None
+
 
 
 
