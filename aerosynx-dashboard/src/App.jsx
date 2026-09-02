@@ -56,7 +56,7 @@ const WS_URL =
 
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL ||
-  "https://virtual-engine-api.onrender.com";
+  "http://localhost:5001";
 
 const FAULT_INJECT_URL =
   `${API_BASE}/api/fault/inject`;
@@ -438,12 +438,15 @@ function TelemetryCard({
   field,
   icon,
   compact = false,
+  digits,
 }) {
   const status =
     rangeStatus(
       field,
       value
     );
+
+  const displayDigits = digits !== undefined ? digits : (field === "vibration_g" ? 4 : 1);
 
   return (
     <div
@@ -474,7 +477,7 @@ function TelemetryCard({
       </div>
 
       <div className="telemetry-value">
-        {format(value)}
+        {format(value, displayDigits)}
       </div>
 
       <div className="telemetry-unit">
@@ -1268,7 +1271,7 @@ export default function App() {
       if (isFetching) return;
       isFetching = true;
       try {
-        const response = await fetch("http://127.0.0.1:5000/api/dashboard");
+        const response = await fetch("http://127.0.0.1:5001/api/dashboard");
         if (response.ok) {
           const raw = await response.json();
           handleIncomingData(raw);
@@ -1281,7 +1284,7 @@ export default function App() {
     };
 
     fetchHttpTelemetry();
-    const pollInterval = setInterval(fetchHttpTelemetry, 100);
+    const pollInterval = setInterval(fetchHttpTelemetry, 50);
 
     // Connection watchdog: only mark offline if no data received for 3 seconds
     const watchdogInterval = setInterval(() => {

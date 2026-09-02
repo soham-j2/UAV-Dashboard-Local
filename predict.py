@@ -499,7 +499,7 @@ def predict_engine(
     # RETURN
     # ========================================================
 
-    return {
+    result = {
 
         "anomaly_status":
             anomaly_status,

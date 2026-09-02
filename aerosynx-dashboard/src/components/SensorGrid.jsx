@@ -145,7 +145,7 @@ function SensorGrid({ data }) {
                     reading[sensor.key]
                   ).toFixed(
                     sensor.key === "vibration_g"
-                      ? 3
+                      ? 4
                       : 1
                   )
                 : "--"

@@ -577,7 +577,7 @@ export default function UAVNewModel({
             border:`1px solid ${hw?"#1a5533":"#3a2070"}`}}>{hw?"HW":"SIM"}</span>
         </div>
         <span style={{fontSize:13,color:"#e1eaf2",fontFamily:"'JetBrains Mono',monospace",fontWeight:600}}>
-          {typeof value==="number"?value.toFixed(1):value}
+          {typeof value==="number"?value.toFixed(sk==="vibration_g"?4:1):value}
           <span style={{fontSize:9,color:"#627d94",marginLeft:3}}>{unit}</span>
         </span>
       </div>

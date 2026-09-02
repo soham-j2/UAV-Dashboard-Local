@@ -10,22 +10,26 @@ import threading
 # ============================================================
 
 API_URL = (
-    "https://virtual-engine-api.onrender.com/api/telemetry"
+    "http://localhost:5000/api/telemetry"
 )
 
-API_TIMEOUT = 1.5
+API_TIMEOUT = 0.5
 
 _LATEST_API_DATA = None
 _API_LOCK = threading.Lock()
 _BG_THREAD_STARTED = False
 _HTTP_SESSION = requests.Session()
 
+# EMA smoothing state  {field: smoothed_value}
+_EMA_STATE = {}
+EMA_ALPHA = 0.25   # 0 = fully smoothed, 1 = raw passthrough
+
 
 def _bg_api_fetcher():
     global _LATEST_API_DATA
     while True:
         try:
-            response = _HTTP_SESSION.get(API_URL, timeout=1.5)
+            response = _HTTP_SESSION.get(API_URL, timeout=0.5)
             if response.status_code == 200:
                 data = response.json()
                 if isinstance(data, dict):
@@ -33,7 +37,7 @@ def _bg_api_fetcher():
                         _LATEST_API_DATA = data
         except Exception:
             pass
-        time.sleep(0.15)
+        time.sleep(0.05)   # 50 ms → 20 Hz
 
 
 def start_bg_fetcher():
@@ -441,6 +445,22 @@ def create_hybrid_reading(
                 "SIMULATED FALLBACK"
             )
 
+        # ----------------------------------------------------
+        # SMOOTH the value with EMA to remove jitter
+        # (especially important for vibration_g)
+        # ----------------------------------------------------
+
+        if field in ["vibration_g", "rpm", "egt_c", "cht_c"]:
+            prev = _EMA_STATE.get(field)
+            alpha = 0.85 if "REAL" in source.get(field, "") else EMA_ALPHA
+            if prev is None:
+                _EMA_STATE[field] = reading[field]
+            else:
+                reading[field] = round(
+                    alpha * reading[field] + (1.0 - alpha) * prev,
+                    4
+                )
+                _EMA_STATE[field] = reading[field]
 
         # ----------------------------------------------------
         # RANGE CHECK
