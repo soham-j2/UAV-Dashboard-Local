@@ -795,6 +795,7 @@ export default function App() {
       isFetching = true;
       try {
         const response = await fetch(`${API_BASE}/api/dashboard`);
+
         if (response.ok) {
           const raw = await response.json();
           handleIncomingData(raw);
