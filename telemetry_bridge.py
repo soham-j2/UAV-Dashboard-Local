@@ -9,7 +9,10 @@ import threading
 # AEROSYNX TELEMETRY BRIDGE
 # ============================================================
 
-API_URL = (
+import os
+
+API_URL = os.environ.get(
+    "VIRTUAL_ENGINE_URL",
     "http://localhost:5000/api/telemetry"
 )
 
@@ -553,4 +556,4 @@ def create_hybrid_reading(
                 "url":
                     API_URL
             }
-    }
+    }
