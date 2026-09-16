@@ -75,7 +75,9 @@ def _pipeline_loop():
                 _CACHE_TIME = time.time()
 
         except Exception as error:
-            print("[Pipeline] Error:", error)
+            import traceback
+print("[Pipeline] Error:", error, flush=True)
+traceback.print_exc()
 
         # Sleep only for the remainder of the interval
         elapsed = time.perf_counter() - loop_start
