@@ -70,7 +70,7 @@ def _pipeline_loop():
                 "context":        telemetry.get("context", {}),
             }
 
-                        with _CACHE_LOCK:
+            with _CACHE_LOCK:
                 _CACHE      = payload
                 _CACHE_TIME = time.time()
 
