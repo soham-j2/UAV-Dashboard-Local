@@ -86,8 +86,13 @@ def _pipeline_loop():
         time.sleep(sleep_for)
 
 
-_bg_thread = threading.Thread(target=_pipeline_loop, daemon=True)
-_bg_thread.start()
+_bg_thread = None
+
+def start_pipeline():
+    global _bg_thread
+    if _bg_thread is None:
+        _bg_thread = threading.Thread(target=_pipeline_loop, daemon=True)
+        _bg_thread.start()
 
 
 # ============================================================
@@ -155,6 +160,8 @@ if __name__ == "__main__":
     print()
     print(f"Pipeline interval: {int(PIPELINE_INTERVAL * 1000)} ms  ({int(1/PIPELINE_INTERVAL)} Hz)")
     print("=" * 65)
+
+    start_pipeline()
 
     app.run(
         host="0.0.0.0",
