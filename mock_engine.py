@@ -35,9 +35,8 @@ async def feed_telemetry(websocket):
         await websocket.send(json.dumps(packet))
         await asyncio.sleep(0.2)
 
-async def main():
     async with websockets.serve(feed_telemetry, "0.0.0.0", PORT):
-    print(f"[Mock Virtual Engine] Publishing telemetry on ws://0.0.0.0:{PORT}/telemetry")
+        print(f"[Mock Virtual Engine] Publishing telemetry on ws://0.0.0.0:{PORT}/telemetry")
         await asyncio.Future()
 
 if __name__ == "__main__":
