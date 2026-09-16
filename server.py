@@ -46,14 +46,14 @@ def _pipeline_loop():
         loop_start = time.perf_counter()
 
         try:
-            # 1. Fetch / blend telemetry (non-blocking — uses cached API data)
+            print("[Pipeline] Step 1: fetching telemetry", flush=True)
             telemetry = create_hybrid_reading()
             telemetry["timestamp"] = int(time.time() * 1000)
 
-            # 2. Run digital twin + AI
+            print("[Pipeline] Step 2: running AI twin", flush=True)
             result = ai_twin.process(telemetry)
 
-            # 3. Build response payload
+            print("[Pipeline] Step 3: building payload", flush=True)
             payload = {
                 "success":        True,
                 "timestamp":      telemetry["timestamp"],
@@ -74,18 +74,18 @@ def _pipeline_loop():
                 _CACHE      = payload
                 _CACHE_TIME = time.time()
 
+            print("[Pipeline] Step 4: cache updated successfully", flush=True)
+
         except Exception as error:
             import traceback
             print("[Pipeline] Error:", error, flush=True)
             traceback.print_exc()
 
-        # Sleep only for the remainder of the interval
         elapsed = time.perf_counter() - loop_start
         sleep_for = max(0.0, PIPELINE_INTERVAL - elapsed)
         time.sleep(sleep_for)
 
 
-# Start background pipeline immediately
 _bg_thread = threading.Thread(target=_pipeline_loop, daemon=True)
 _bg_thread.start()
 
