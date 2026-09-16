@@ -70,11 +70,11 @@ def _pipeline_loop():
                 "context":        telemetry.get("context", {}),
             }
 
-            with _CACHE_LOCK:
+                        with _CACHE_LOCK:
                 _CACHE      = payload
                 _CACHE_TIME = time.time()
 
-                except Exception as error:
+        except Exception as error:
             import traceback
             print("[Pipeline] Error:", error, flush=True)
             traceback.print_exc()
