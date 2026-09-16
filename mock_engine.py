@@ -1,7 +1,10 @@
 import asyncio
 import json
+import os
 import time
 import websockets
+
+PORT = int(os.environ.get("PORT", 8080))
 
 async def feed_telemetry(websocket):
     print("\n[Mock Virtual Engine] AI Decision Engine connected to telemetry stream.")
@@ -33,8 +36,8 @@ async def feed_telemetry(websocket):
         await asyncio.sleep(0.2)
 
 async def main():
-    async with websockets.serve(feed_telemetry, "0.0.0.0", 8080):
-        print("[Mock Virtual Engine] Publishing telemetry on ws://localhost:8080/telemetry")
+    async with websockets.serve(feed_telemetry, "0.0.0.0", PORT):
+    print(f"[Mock Virtual Engine] Publishing telemetry on ws://0.0.0.0:{PORT}/telemetry")
         await asyncio.Future()
 
 if __name__ == "__main__":

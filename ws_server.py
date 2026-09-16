@@ -1,12 +1,16 @@
 import asyncio
 import json
+import os
 import websockets
 from predict import predict_engine_decision
+
+PORT = int(os.environ.get("PORT", 8081))
+TELEMETRY_URI = os.environ.get("TELEMETRY_WS_URL", "ws://localhost:8080/telemetry")
 
 connected_clients = set()
 
 async def telemetry_listener():
-    uri = "ws://localhost:8080/telemetry"
+    uri = TELEMETRY_URI
     while True:
         try:
             async with websockets.connect(uri) as ws:
@@ -30,8 +34,8 @@ async def decision_server(websocket):
         connected_clients.remove(websocket)
 
 async def main():
-    server = await websockets.serve(decision_server, "0.0.0.0", 8081)
-    print("AI/Math Decision WebSocket active on ws://0.0.0.0:8081/decision")
+    server = await websockets.serve(decision_server, "0.0.0.0", PORT)
+    print(f"AI/Math Decision WebSocket active on ws://0.0.0.0:{PORT}/decision")
     await asyncio.gather(server.wait_closed(), telemetry_listener())
 
 if __name__ == "__main__":
