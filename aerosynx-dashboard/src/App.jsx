@@ -787,7 +787,7 @@ export default function App() {
   }, [handleIncomingData]);
 
   useEffect(() => {
-    connectWebSocket();
+    // connectWebSocket(); // Disabled: Flask /api/dashboard is the single source of truth
 
     let isFetching = false;
     const fetchHttpTelemetry = async () => {
