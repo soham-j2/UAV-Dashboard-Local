@@ -2,7 +2,7 @@ import asyncio
 import json
 import os
 import websockets
-from predict import predict_engine_decision
+from predict import predict_engine
 
 PORT = int(os.environ.get("PORT", 8081))
 TELEMETRY_URI = os.environ.get("TELEMETRY_WS_URL", "ws://localhost:8080/telemetry")
@@ -17,7 +17,7 @@ async def telemetry_listener():
                 print("[AI Engine] Connected to Virtual Engine telemetry stream on port 8080.")
                 async for message in ws:
                     packet = json.loads(message)
-                    decision = predict_engine_decision(packet)
+                    decision = predict_engine(packet.get("reading", {}))
 
                     if connected_clients and decision:
                         payload = json.dumps(decision)
